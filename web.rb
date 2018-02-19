@@ -24,9 +24,15 @@ post "/images_from_card" do
 
   result =
     if PicTwitter.support?(status_url)
-      PicTwitter.image_urls(status_url)
+      imgs = PicTwitter.image_urls(status_url)
+      {
+        "url_0" => imgs[0],
+        "url_1" => imgs[1],
+        "url_2" => imgs[2],
+        "url_3" => imgs[3],
+      }
     else
-      []
+      ""
     end
 
   result.to_json
