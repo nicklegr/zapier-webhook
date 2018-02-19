@@ -9,8 +9,8 @@ require_relative "services"
 post "/images_from_card" do
   json = JSON.parse(request.body.read)
 
-  name = json["card_name"]
-  desc = json["card_desc"]
+  name = json["card_name"] || ""
+  desc = json["card_desc"] || ""
 
   status_url_regexp = %r|https?://twitter.com/\w+/status(?:es)?/\d+|
 
