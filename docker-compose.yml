@@ -1,0 +1,6 @@
+web:
+  build: .
+  command: bundle exec ruby web.rb -o 0.0.0.0 -p 80
+  environment:
+    VIRTUAL_HOST: zapier-webhook.airytail.co
+  restart: always
