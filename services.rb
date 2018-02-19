@@ -4,8 +4,6 @@ require 'open-uri'
 require 'bundler/setup'
 Bundler.require
 
-require_relative "exception"
-
 module PicTwitter
   def self.support?(url)
     url.match(%r|^https?://twitter.com/\w+/status(es)?/\d+|)
@@ -26,8 +24,6 @@ module PicTwitter
       e.sub(%r/:\w+$/, '') + ":orig"
     end
 
-    raise DownloadError if img_urls.empty?
-
     img_urls
   end
 end
@@ -44,7 +40,7 @@ module Instagram
     doc = Nokogiri::HTML(open(request_url, allow_redirections: :safe))
     meta = doc.css('meta[property="og:image"]').first
 
-    raise DownloadError unless meta && meta['content']
+    return [] unless meta && meta['content']
     [ meta['content'] ]
   end
 end
@@ -62,7 +58,7 @@ module Twitpic
     doc = Nokogiri::HTML(open(request_url, allow_redirections: :safe))
     img = doc.css('div#media > img').first
 
-    raise DownloadError unless img && img['src']
+    return [] unless img && img['src']
     [ img['src'] ]
   end
 end
